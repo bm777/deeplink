@@ -1,5 +1,5 @@
 # deeplink
-Expose your hardward
+Expose your hardware
  - GPU
  - Metal
- - High performing CPU
+ - High-performing CPU
