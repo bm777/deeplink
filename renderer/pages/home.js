@@ -29,6 +29,8 @@ export default function HomePage() {
   // when the user clicks on the button, the tab state changes
   const handleClick = (e) => {
     setTab(e.target.textContent)
+    // set object enable to true if the button is clicked
+    e.target.enabled = true
   }
 
   return (
@@ -39,13 +41,13 @@ export default function HomePage() {
 
       <div className='flex w-full h-full'>
         {/* left */}
-        <div className='flex flex-col h-full w-[25%] bg-[#EED6EA]'>
+        <div className='flex flex-col h-full w-[250px] bg-[#EED6EA]'>
           <div className=' bg-[#E1C9DD] flex mx-3 mt-7 rounded py-[2px] px-2 text-[#6C5468]'>@IP</div>
 
-          <div className='flex-1'>
-            <Btn text="Check" onClick={handleClick} enabled={"Check" === tab}/>
-            <Btn text="Inference" onClick={handleClick} enabled={"Inference" === tab} />
-            <Btn text="Usage" onClick={handleClick} enabled={"Usage" === tab} />
+          <div className='flex-1 pt-3'>
+            <Btn text="Check" handleClick={handleClick} enabled={"Check" === tab}/>
+            <Btn text="Inference" handleClick={handleClick} enabled={"Inference" === tab} />
+            <Btn text="Usage" handleClick={handleClick} enabled={"Usage" === tab} />
           </div>
 
         </div>

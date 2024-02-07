@@ -24,6 +24,9 @@ ipcMain.on('message', async (event, query) => {
   const mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
+    minimizable: false,
+    maximizable: false,
+    resizable: false,
     webPreferences: {
       // preload: path.join(__dirname, 'preload.js'),
     },
@@ -34,7 +37,7 @@ ipcMain.on('message', async (event, query) => {
   } else {
     const port = process.argv[2]
     await mainWindow.loadURL(`http://localhost:${port}/home`)
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
   }
 })()
 
