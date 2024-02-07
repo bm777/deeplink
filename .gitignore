@@ -1,0 +1,9 @@
+node_modules
+*.log
+.vscode
+.next
+out
+dist
+server
+app
+

@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .main-content {
+        @apply bg-gradient-to-r from-[#FFF8F5] to-[#E9EFFD];
+    }   
+}
+

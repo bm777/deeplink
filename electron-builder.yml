@@ -1,0 +1,15 @@
+appId: com.example.nextron
+productName: deepfile
+copyright: Copyright © 2023 Bayangmbe Mounmo
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+protocols:
+  name: deepfile
+  schemes: [deepfile-fiddle]
+publish: null
