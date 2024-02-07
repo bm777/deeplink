@@ -10,6 +10,6 @@ files:
       - package.json
       - app
 protocols:
-  name: deepfile
-  schemes: [deepfile-fiddle]
+  name: deeplink
+  schemes: [deeplink-fiddle]
 publish: null

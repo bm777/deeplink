@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
+import Btn from '../components/btn'
 
 let ipcRenderer
 if(typeof window !== "undefined" && window.process && window.process.type === "renderer"){
@@ -10,6 +9,7 @@ if(typeof window !== "undefined" && window.process && window.process.type === "r
 
 export default function HomePage() {
   const [message, setMessage] = useState('No message found')
+  const [tab, setTab] = useState('Check')
 
   useEffect(() => {
     
@@ -26,33 +26,35 @@ export default function HomePage() {
     return () => { ipcRenderer.removeAllListeners('message') }
   }, [])
 
+  // when the user clicks on the button, the tab state changes
+  const handleClick = (e) => {
+    setTab(e.target.textContent)
+  }
 
   return (
-    <main>
+    <main className='w-full h-screen'>
       <Head>
-        <title>Home - Nextron (basic-lang-javascript)</title>
+        <title>deeplink</title>
       </Head>
-      <div>
-        <p>
-          ⚡ Electron + Next.js ⚡ -
-          <Link href="/next">
-            <a>Go to next page</a>
-          </Link>
-        </p>
-        <Image
-          src="/images/logo.png"
-          alt="Logo image"
-          width="256px"
-          height="256px"
-        />
-      </div>
-      <div>
-        <button className=' bg-red-500'
 
-        >
-          Test IPC
-        </button>
-        <p>{message}</p>
+      <div className='flex w-full h-full'>
+        {/* left */}
+        <div className='flex flex-col h-full w-[25%] bg-[#EED6EA]'>
+          <div className=' bg-[#E1C9DD] flex mx-3 mt-7 rounded py-[2px] px-2 text-[#6C5468]'>@IP</div>
+
+          <div className='flex-1'>
+            <Btn text="Check" onClick={handleClick} enabled={"Check" === tab}/>
+            <Btn text="Inference" onClick={handleClick} enabled={"Inference" === tab} />
+            <Btn text="Usage" onClick={handleClick} enabled={"Usage" === tab} />
+          </div>
+
+        </div>
+
+        {/* center or right */}
+        <div className='flex w-full'>
+          right
+        </div>
+        
       </div>
     </main>
   )
