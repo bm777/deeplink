@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Btn from '../components/btn'
+import Card from '../components/card'
+import GPU from '../components/gpu'
+import Token from '../components/token'
+import Model from '../components/model'
 
 let ipcRenderer
 if(typeof window !== "undefined" && window.process && window.process.type === "renderer"){
@@ -12,8 +16,7 @@ export default function HomePage() {
   const [tab, setTab] = useState('Check')
   const [checking, setChecking] = useState(false)
 
-  // useEffect(() => {
-    
+  // useEffect(() => { 
   //   const listener = async (event, arg) => {
   //     ipcRenderer.send('message', 'Hello from renderer')
   //     ipcRenderer.on('message-reply', (event, arg) => {
@@ -21,7 +24,6 @@ export default function HomePage() {
   //       setMessage(arg)
   //     })
   //   }
-
   //   listener()
 
   //   return () => { ipcRenderer.removeAllListeners('message') }
@@ -63,55 +65,14 @@ export default function HomePage() {
             </div>
             <div className='flex-1 flex flex-col '>
               <div className='flex-1 flex justify-center gap-10'>
-                <div className=' h-[90%] my-auto w-[40%] flex items-center justify-center relative'>
-                  <div className=' flex justify-center gap-3 w-[300px] h-[300px] absolute  animate-pulse'>
-                    {
-                      Array.from({length: 10}, () => Math.floor(Math.random() * 10)).map((num, i) => (
-                        <div className=' bg-black w-[10px]  rounded-full h-[300px]'></div>
-                      ))
-                    } 
-                  </div>
-                  <div className=' flex-col flex items-center justify-center gap-3 w-[300px] h-[300px] absolute animate-pulse'>
-                    {
-                      Array.from({length: 10}, () => Math.floor(Math.random() * 10)).map((num, i) => (
-                        <div className=' bg-black h-[10px]  rounded-full w-[300px]'></div>
-                      ))
-                    } 
-                  </div>
-                  <div className=' flex-col flex items-center bg-black rounded-xl justify-center w-[250px] h-[250px] absolute'>
-                    <div className=' flex-col flex items-center bg-black border-[10px] border-white rounded-md justify-center w-[230px] h-[230px] absolute'>
-                    {
-                      checking ?
-                      <p className='text-[30px] text-white '>checking</p>
-                      :
-                      <p className='text-[70px] text-white '>GPU</p>
-                    }
-                    </div>
-                  </div>
-                </div>
+                <GPU checking={checking}></GPU>
                 <div className=' h-[90%] my-auto'></div>
-                <div className=' h-[90%] my-auto flex flex-col justify-center'>
+                <div className=' h-[90%] my-auto flex flex-col justify-center gap-4'>
 
-                  <div className=' border border-[#00000017] h-[80px] w-[150px] shadow-xl shadow-[#00000007] rounded-xl flex justify-center pt-2 relative'>
-                    <div className=' text-2xl font-medium'>24 GB </div>
-                    <div className=' absolute bottom-2 flex'>
-                      <span className='text-[#45363D]'>RAM</span>
-                    </div>
-                  </div>
-
-                  <div className=' border border-[#00000017] h-[80px] w-[150px] shadow-xl shadow-[#00000007] rounded-xl flex justify-center pt-2 relative mt-3'>
-                    <div className=' text-2xl font-medium'>6 GB </div>
-                    <div className=' absolute bottom-2 flex'>
-                      <span className='text-[#45363D]'>GPU</span>
-                    </div>
-                  </div>
-
-                  <div className=' border border-[#00000017] h-[80px] w-[150px] shadow-xl shadow-[#00000007] rounded-xl flex justify-center pt-2 relative mt-3'>
-                    <div className=' text-2xl font-medium'>32 Mbps </div>
-                    <div className=' absolute bottom-2 flex'>
-                      <span className='text-[#45363D]'>SPEED</span>
-                    </div>
-                  </div>
+                  <Card title="24 GB" subtitle="RAM"/>
+                  <Card title="6 GB" subtitle="GPU"/>
+                  <Card title="32 Mbps" subtitle="SPEED"/>
+                  
                 </div>
               </div>
               <div className=' h-[100px]'></div>
@@ -121,13 +82,23 @@ export default function HomePage() {
         {
           tab === 'Inference' &&
           <div className='flex flex-col w-[750px]'>
-            
-          </div>
-        }
-        {
-          tab === 'Usage' &&
-          <div className='flex flex-col w-[750px]'>
-            
+            <div className='flex items-center pl-7 h-[100px] text-3xl font-medium w-full relative'>
+              Inference on your device
+              <p className='text-lg font-normal absolute bottom-0'>We count the input and output token generated this device.</p>
+            </div>
+            <div className='flex-1 flex flex-col '>
+              <div className='flex-1 flex justify-center gap-10'>
+
+                <div className=' h-[90%] my-auto flex  gap-4'>
+
+                  <Token title="12.5 k" subtitle="input otken"/>
+                  <Token title="1.4 M" subtitle="output token"/>
+                  <Model title="Mistral 8x7B" subtitle="model"/>
+                  
+                </div>
+              </div>
+              <div className=' h-[100px]'></div>
+            </div>
           </div>
         }
         
