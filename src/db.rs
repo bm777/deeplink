@@ -13,7 +13,7 @@ pub fn init_database() -> Result<(), Error> {
         let conn = Connection::open(&database_path)?;
 
         conn.execute(
-            "CREATE TABLE hardware (
+            "CREATE TABLE IF NOT EXISTS hardware (
                 id INTEGER PRIMARY KEY,
                 gpu TEXT NOT NULL,
                 ram TEXT NOT NULL,
@@ -21,9 +21,17 @@ pub fn init_database() -> Result<(), Error> {
             )",
             [],
         )?;
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS credentials (
+                id INTEGER PRIMARY KEY,
+                token TEXT NOT NULL,
+                uniq_id TEXT NOT NULL
+            )",
+            [],
+        )?;
 
         println!("Database created at {}", &database_path);
-        println!("Table hardware created");
+        println!("Table created: hardware, credentials");
     } else {
         println!("Database already exists at {}", &database_path);
     }

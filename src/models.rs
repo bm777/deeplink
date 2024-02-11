@@ -8,3 +8,10 @@ pub struct Hardware {
     pub ram: String,
     pub internet_speed: String,
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct Credentials {
+    pub id: Option<i32>,
+    pub token: String,
+    pub uniq_id: String,
+}

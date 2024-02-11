@@ -1,6 +1,6 @@
 
 use serde_json;
-use crate::models::Hardware;
+use crate::models::{Hardware, Credentials};
 use rusqlite::{Connection, Result};
 use crate::constants::{INTERNAL_ERROR};
 use dotenv::dotenv;
@@ -14,6 +14,10 @@ pub fn get_id(request: &str) -> &str {
 
 // deserialize hardware from request body without id
 pub fn get_hardware_request_body(request: &str) -> Result<Hardware, serde_json::Error> {
+    serde_json::from_str(request.split("\r\n\r\n").last().unwrap_or_default())
+}
+// deserialize credentials from request body without id
+pub fn get_credentials_request_body(request: &str) -> Result<Credentials, serde_json::Error> {
     serde_json::from_str(request.split("\r\n\r\n").last().unwrap_or_default())
 }
 
