@@ -27,7 +27,13 @@ pub fn establish_connection() -> Result<Connection, (String, String)> {
     let database_path = env::var("DATABASE_PATH").expect("DATABASE_PATH must be set");
     
     match Connection::open(&database_path) {
-        Ok(conn) => Ok(conn),
-        Err(e) => Err((INTERNAL_ERROR.to_string(), format!("Failed to open connection: {}", e)))
+        Ok(conn) => {
+            // conn.execute_batch("PRAGMA journal_mode=WAL;").expect("Failed to set journal mode to WAL");
+            Ok(conn)
+        },
+        Err(e) => {
+            println!("Failed to connect to database: {}", e);
+            Err((INTERNAL_ERROR.to_string(), format!("Failed to open connection: {}", e)))
+        }
     }
 }

@@ -19,7 +19,7 @@ pub fn create_resource(resource_type: &str, request: &str) -> (String, String) {
                     conn.execute(
                         "INSERT INTO hardware (gpu, ram, internet_speed) VALUES (?1, ?2, ?3)",
                         &[&hardware.gpu, &hardware.ram, &hardware.internet_speed]
-                    ).unwrap();
+                    ).expect("Failed to insert hardware");
                     println!("Hardware created");
 
                     (OK_RESPONSE.to_string(), "hardware created".to_string())
@@ -36,7 +36,7 @@ pub fn create_resource(resource_type: &str, request: &str) -> (String, String) {
                     conn.execute(
                         "INSERT INTO credentials (token, uniq_id) VALUES (?1, ?2)",
                         &[&credentials.token, &credentials.uniq_id]
-                    ).unwrap();
+                    ).expect("Failed to insert credentials");
 
                     (OK_RESPONSE.to_string(), "credentials created".to_string())
                 },

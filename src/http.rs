@@ -32,7 +32,7 @@ pub fn handle_request(mut stream: TcpStream) {
 fn extract_resource_type(request: &str) -> Option<String> {
     let parts: Vec<&str> = request.split_whitespace().collect();
     let path = parts.get(1).unwrap_or(&"").to_string();
-    println!("Path: {}", path);
+    // println!("Path: {}", path);
 
     if path.starts_with("/hardware") {
         Some("hardware".to_string())
@@ -42,13 +42,3 @@ fn extract_resource_type(request: &str) -> Option<String> {
         None
     }
 }
-
-// pub fn handle_hardware(stream: TcpStream) {
-//     println!("Handling hardware");
-//     handle_request(stream, "hardware");
-// }
-
-// pub fn handle_credentials(stream: TcpStream) {
-//     println!("Handling credentials");
-//     handle_request(stream, "credentials");
-// }
