@@ -1,0 +1,7 @@
+gpu = "Chipset Model: Apple M2"
+ram = 8388608
+internet_speed = "5Mbps"
+token = "123456"
+unique_id = "123456"
+input = 0
+output = 0

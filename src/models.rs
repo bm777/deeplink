@@ -1,17 +1,14 @@
-use serde_derive::{Deserialize, Serialize};
+use serde_derive::{Serialize, Deserialize};
 
-// models
+
 #[derive(Serialize, Deserialize)]
-pub struct Hardware {
-    pub id: Option<i32>,
+#[derive(Debug)]
+pub struct SystemInfo {
     pub gpu: String,
-    pub ram: String,
+    pub ram: u64, // RAM in MB
     pub internet_speed: String,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Credentials {
-    pub id: Option<i32>,
     pub token: String,
-    pub uniq_id: String,
+    pub unique_id: String,
+    pub input: i32,
+    pub output: i32
 }

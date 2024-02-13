@@ -4,10 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-rusqlite = "0.30"
+sys-info = "0.9.1"
 serde = "1.0"
-serde_json = "1.0"
+anyhow = "1.0"
+toml = "0.8.10"
 serde_derive = "1.0"
-dotenv = "0.15.0"

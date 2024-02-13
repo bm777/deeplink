@@ -1,40 +1,32 @@
-use rusqlite::{Connection, Result, Error};
-use dotenv::dotenv;
+use anyhow::Result;
+use std::fs;
 use std::path::Path;
-use std::env;
+use crate::models::SystemInfo;
 
-pub fn init_database() -> Result<(), Error> {
-    dotenv().ok();
 
-    let database_path = env::var("DATABASE_PATH").expect("DATABASE_URL must be set");
-    
-    
-    if !Path::new(&database_path).exists() {
-        let conn = Connection::open(&database_path)?;
+const DB_PATH: &str = "system.toml";
 
-        conn.execute(
-            "CREATE TABLE IF NOT EXISTS hardware (
-                id INTEGER PRIMARY KEY,
-                gpu TEXT NOT NULL,
-                ram TEXT NOT NULL,
-                internet_speed TEXT NOT NULL
-            )",
-            [],
-        )?;
-        conn.execute(
-            "CREATE TABLE IF NOT EXISTS credentials (
-                id INTEGER PRIMARY KEY,
-                token TEXT NOT NULL,
-                uniq_id TEXT NOT NULL
-            )",
-            [],
-        )?;
-
-        println!("Database created at {}", &database_path);
-        println!("Table created: hardware, credentials");
+pub fn load_system_info() -> Result<SystemInfo> {
+    let db_path = Path::new(DB_PATH);
+    if db_path.exists() {
+        let contents = fs::read_to_string(db_path)?;
+        let info: SystemInfo = toml::from_str(&contents)?;
+        Ok(info)
     } else {
-        println!("Database already exists at {}", &database_path);
+        Ok(SystemInfo {
+            gpu: String::new(),
+            ram: 0,
+            internet_speed: String::new(),
+            token: String::new(),
+            unique_id: String::new(),
+            input: 0,
+            output: 0
+        })
     }
+}
 
+pub fn save_system_info(info: &SystemInfo) -> Result<()> {
+    let contents = toml::to_string(&info)?;
+    fs::write(DB_PATH, contents)?;
     Ok(())
 }
