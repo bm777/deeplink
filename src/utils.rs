@@ -16,7 +16,7 @@ pub async fn check_hardware() -> Result<Response<Body>, Infallible> {
     } else {
         serde_json::to_string(&serde_json::json!({ "status": "error", "message": "Insufficient RAM" })).expect("Failed to serialize error message")
     };
-
+    println!("System info: {}", body);
     Ok(Response::builder()
         .status(StatusCode::OK)
         .header(CONTENT_TYPE, "application/json")
