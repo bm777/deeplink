@@ -6,4 +6,4 @@ out
 dist
 server
 app
-
+.DS_Store
