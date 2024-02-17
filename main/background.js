@@ -10,13 +10,10 @@ if (isProd) {
   app.setPath('userData', `${app.getPath('userData')} (development)`)
 }
 
-// ipcMain.on('message', async (event, arg) => {
-//   event.reply('message', `${arg} World!`)
-// })
-ipcMain.on('message', async (event, query) => {
-  console.log("DEBUG: ipcMain <searcher>")
-  event.sender.send("message-reply", "Hello from main process")
-});
+// ipcMain.on('message', async (event, query) => {
+//   console.log("DEBUG: ipcMain <searcher>")
+//   event.sender.send("message-reply", "Hello from main process")
+// });
 
 (async () => {
   await app.whenReady()
@@ -27,9 +24,6 @@ ipcMain.on('message', async (event, query) => {
     minimizable: false,
     maximizable: false,
     resizable: false,
-    webPreferences: {
-      // preload: path.join(__dirname, 'preload.js'),
-    },
   })
 
   if (isProd) {
