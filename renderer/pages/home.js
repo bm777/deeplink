@@ -5,6 +5,7 @@ import Card from '../components/card'
 import GPU from '../components/gpu'
 import Token from '../components/token'
 import Model from '../components/model'
+import { checkHardware } from './api/methods'
 
 let ipcRenderer
 if(typeof window !== "undefined" && window.process && window.process.type === "renderer"){
@@ -15,19 +16,17 @@ export default function HomePage() {
   const [message, setMessage] = useState('No message found')
   const [tab, setTab] = useState('Check')
   const [checking, setChecking] = useState(false)
+  const [activeInference, setActiveInference] = useState(false)
 
-  // useEffect(() => { 
-  //   const listener = async (event, arg) => {
-  //     ipcRenderer.send('message', 'Hello from renderer')
-  //     ipcRenderer.on('message-reply', (event, arg) => {
-  //       console.log("DEBUG: ipcRenderer <listener>")
-  //       setMessage(arg)
-  //     })
-  //   }
-  //   listener()
+  useEffect(() => { 
+    const check = async () => {
+      setChecking(true)
+      const result = await checkHardware()
+      setChecking(false)
+    }
 
-  //   return () => { ipcRenderer.removeAllListeners('message') }
-  // }, [])
+    check()
+  }, [])
 
   // when the user clicks on the button, the tab state changes
   const handleClick = (e) => {
@@ -48,7 +47,7 @@ export default function HomePage() {
           <div className=' bg-[#E1C9DD] flex mx-3 mt-7 rounded py-[2px] px-2 text-[#6C5468]'>@IP</div>
           <div className='flex-1 pt-3 relative'>
             <Btn text="Check" handleClick={handleClick} enabled={"Check" === tab}/>
-            <Btn text="Inference" handleClick={handleClick} enabled={"Inference" === tab} />
+            <Btn text="Inference" handleClick={handleClick} enabled={"Inference" === tab} active={activeInference}/>
             <div className='absolute w-full bottom-3'>
               <Btn text="GPU Usage" handleClick={() => {}} enabled={"" === tab} extra={45} />
             </div>
@@ -80,7 +79,7 @@ export default function HomePage() {
           </div>
         }
         {
-          tab === 'Inference' &&
+          (tab === 'Inference' && activeInference) &&
           <div className='flex flex-col w-[750px]'>
             <div className='flex items-center pl-7 h-[100px] text-3xl font-medium w-full relative'>
               Inference on your device
@@ -98,6 +97,15 @@ export default function HomePage() {
                 </div>
               </div>
               <div className=' h-[100px]'></div>
+            </div>
+          </div>
+        }
+        {
+          (tab === 'Inference' && !activeInference) &&
+          <div className='flex flex-col w-[750px]'>
+            <div className='flex items-center pl-7 h-[100px] text-3xl font-medium w-full relative'>
+              Cannot make inference on your device
+              <p className='text-lg font-normal absolute bottom-0'>Upgrade your GPU hardware in order to run models.</p>
             </div>
           </div>
         }
